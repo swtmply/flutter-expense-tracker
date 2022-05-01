@@ -11,7 +11,7 @@ class Transaction extends HiveObject {
   late DateTime dateAdded;
 
   @HiveField(2)
-  late bool isExpnse = true;
+  late bool isExpense = true;
 
   @HiveField(3)
   late double amount;

@@ -3,7 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gas2s/models/transaction_model.dart';
 import 'package:gas2s/screens/home_screen.dart';
+import 'package:gas2s/screens/transactions_screen.dart';
+import 'package:gas2s/theme/colors.dart';
+import 'package:gas2s/widgets/navigation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
 // ignore: library_prefixes
 import 'package:path_provider/path_provider.dart' as pathProvider;
 
@@ -25,8 +29,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
+    return MaterialApp(
+      theme: ThemeData(
+        primaryColor: AppColors.violet,
+      ),
+      debugShowCheckedModeBanner: false,
+      routes: {
+        '/home': (context) => HomePage(),
+        '/transactions': (context) => TransactionsScreen(),
+      },
+      home: Navigation(),
     );
   }
 }
