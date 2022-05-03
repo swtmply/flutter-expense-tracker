@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gas2s/screens/category_screen.dart';
 import 'package:gas2s/screens/home_screen.dart';
 import 'package:gas2s/screens/stats_screen.dart';
 import 'package:gas2s/theme/colors.dart';
@@ -18,12 +17,27 @@ class _NavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: () => Navigator.pushNamed(context, '/add'),
         elevation: 2,
         backgroundColor: AppColors.violet,
-        child: const Icon(Icons.add),
+        child: Container(
+          width: 80,
+          height: 80,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                AppColors.violet,
+                AppColors.pink,
+              ],
+            ),
+          ),
+          child: const Icon(Icons.add),
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
@@ -37,15 +51,9 @@ class _NavigationState extends State<Navigation> {
               currentPage: _currentPage,
             ),
             BottomNavItem(
-              icon: Icons.category,
-              pageController: _pageController,
-              page: 1,
-              currentPage: _currentPage,
-            ),
-            BottomNavItem(
               icon: Icons.bar_chart,
               pageController: _pageController,
-              page: 2,
+              page: 1,
               currentPage: _currentPage,
             ),
           ],
@@ -61,7 +69,6 @@ class _NavigationState extends State<Navigation> {
         },
         children: const [
           HomePage(),
-          CategoryScreen(),
           StatsScreen(),
         ],
       ),
@@ -87,7 +94,7 @@ class BottomNavItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: SizedBox(
-        height: 60,
+        height: 50,
         child: Material(
           type: MaterialType.transparency,
           child: InkWell(

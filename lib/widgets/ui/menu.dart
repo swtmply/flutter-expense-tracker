@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:gas2s/models/transaction_model.dart';
 import 'package:gas2s/theme/colors.dart';
+import 'package:hive/hive.dart';
 
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var transactions = Hive.box<Transaction>('transactions');
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         InkWell(
+          onTap: () {
+            transactions.clear();
+          },
           child: Container(
             padding: const EdgeInsets.all(4.0),
             decoration: BoxDecoration(

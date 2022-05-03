@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gas2s/models/transaction_model.dart';
+import 'package:gas2s/screens/add_transaction_screen.dart';
 import 'package:gas2s/screens/home_screen.dart';
 import 'package:gas2s/screens/transactions_screen.dart';
 import 'package:gas2s/theme/colors.dart';
@@ -35,10 +36,11 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/home': (context) => HomePage(),
-        '/transactions': (context) => TransactionsScreen(),
+        '/home': (context) => const HomePage(),
+        '/transactions': (context) => const TransactionsScreen(),
+        '/add': (context) => const AddTrasactionScreen(),
       },
-      home: Navigation(),
+      home: const Navigation(),
     );
   }
 }

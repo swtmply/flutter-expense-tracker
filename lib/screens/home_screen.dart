@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gas2s/models/transaction_model.dart';
 import 'package:gas2s/theme/colors.dart';
 import 'package:gas2s/widgets/layout.dart';
-import 'package:gas2s/widgets/navigation.dart';
-import 'package:gas2s/widgets/menu.dart';
-import 'package:gas2s/widgets/transaction_list_item.dart';
+import 'package:gas2s/widgets/transactions/transactions_dateexpense.dart';
+import 'package:gas2s/widgets/ui/menu.dart';
+import 'package:gas2s/widgets/ui/title_text.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,6 +16,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Box<Transaction> transactions = Hive.box<Transaction>('transactions');
+
   @override
   void dispose() {
     Hive.close();
@@ -35,16 +39,10 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 50.0),
 
           Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Transactions',
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              const AppTitle(text: 'Transactions'),
               Material(
                 color: Colors.transparent,
                 child: InkWell(
@@ -62,9 +60,16 @@ class _HomePageState extends State<HomePage> {
           ),
           const SizedBox(height: 25.0),
 
-          TransactionListItem(),
-          TransactionListItem(),
-          TransactionListItem(),
+          ValueListenableBuilder(
+            valueListenable: transactions.listenable(),
+            builder: (context, Box<Transaction> box, _) {
+              final transactions = box.values.toList().cast<Transaction>();
+
+              return TransactionDateExpense(
+                transactionListItems: transactions,
+              );
+            },
+          ),
         ],
       ),
     );

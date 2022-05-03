@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:gas2s/models/transaction_model.dart';
 import 'package:gas2s/theme/colors.dart';
+import 'package:intl/intl.dart';
 
 class TransactionListItem extends StatelessWidget {
   const TransactionListItem({
     Key? key,
+    required this.transaction,
   }) : super(key: key);
+
+  final Transaction transaction;
 
   @override
   Widget build(BuildContext context) {
+    final money = transaction.isExpense
+        ? '-${transaction.amount.toString()}'
+        : transaction.amount.toString();
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.symmetric(
@@ -33,15 +42,15 @@ class TransactionListItem extends StatelessWidget {
               Container(
                 width: 50,
                 height: 50,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.pink,
+                  color: _getColor(transaction.name),
                 ),
               ),
               const SizedBox(width: 10),
-              const Text(
-                'Food',
-                style: TextStyle(
+              Text(
+                transaction.name,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -50,11 +59,11 @@ class TransactionListItem extends StatelessWidget {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: const [
-              Text('₱ -100'),
+            children: [
+              Text('₱ ${money.toString()}'),
               Text(
-                'Today',
-                style: TextStyle(
+                DateFormat.E().format(transaction.dateAdded),
+                style: const TextStyle(
                   fontSize: 12,
                   color: AppColors.darkGray,
                 ),
@@ -64,5 +73,20 @@ class TransactionListItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color _getColor(String type) {
+    switch (type) {
+      case 'Food':
+        return AppColors.pink;
+      case 'Clothes':
+        return AppColors.violet;
+      case 'Transportation':
+        return AppColors.purple;
+      case 'Gadget':
+        return AppColors.orange;
+      default:
+        return AppColors.red;
+    }
   }
 }
