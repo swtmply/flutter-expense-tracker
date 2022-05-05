@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:gas2s/models/transaction_model.dart';
+import 'package:gas2s/models/transaction/transaction_model.dart';
+import 'package:gas2s/models/user/user_model.dart';
 import 'package:gas2s/theme/colors.dart';
 import 'package:gas2s/widgets/ui/forms/dropdown_list.dart';
 import 'package:gas2s/widgets/layout.dart';
@@ -18,6 +18,7 @@ class AddTrasactionScreen extends StatefulWidget {
 
 class _AddTrasactionScreenState extends State<AddTrasactionScreen> {
   Box<Transaction> transactions = Hive.box<Transaction>('transactions');
+
   final List<String> _types = ['Expense', 'Income'];
   final List<String> _categories = [
     'Clothes',
@@ -31,6 +32,7 @@ class _AddTrasactionScreenState extends State<AddTrasactionScreen> {
   String _category = 'Clothes';
   int _amount = 0;
   DateTime _selectedDate = DateTime.now();
+  bool _isIncome = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +49,7 @@ class _AddTrasactionScreenState extends State<AddTrasactionScreen> {
               onChanged: (String newValue) {
                 setState(() {
                   _isExpense = newValue;
+                  _isIncome = !_isIncome;
                 });
               },
               defaultValue: _isExpense,
@@ -122,53 +125,26 @@ class _AddTrasactionScreenState extends State<AddTrasactionScreen> {
               ],
             ),
             const SizedBox(height: 10),
-            DropdownList(
-              onChanged: (String newValue) {
-                setState(() {
-                  _category = newValue;
-                });
-              },
-              defaultValue: _category,
-              items: _categories,
-              label: 'Category',
+            Visibility(
+              visible: !_isIncome,
+              child: DropdownList(
+                onChanged: (String newValue) {
+                  setState(() {
+                    _category = newValue;
+                  });
+                },
+                defaultValue: _category,
+                items: _categories,
+                label: 'Category',
+              ),
             ),
             const SizedBox(height: 10),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    AppColors.violet,
-                    AppColors.pink,
-                  ],
-                ),
-              ),
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  minimumSize: const Size.fromHeight(50),
-                  primary: Colors.white,
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                  ),
-                  padding: const EdgeInsets.only(),
-                ),
-                onPressed: () {
-                  final transaction = Transaction()
-                    ..name = _category
-                    ..amount = _amount.toDouble()
-                    ..dateAdded = _selectedDate
-                    ..isExpense = _isExpense == 'Expense' ? true : false;
-
-                  if (_amount != 0) {
-                    transactions.add(transaction);
-                    Navigator.pushNamed(context, '/');
-                  }
-                },
-                child: const Text('Submit'),
-              ),
+            _SubmitButton(
+              category: _category,
+              amount: _amount,
+              selectedDate: _selectedDate,
+              isExpense: _isExpense,
+              transactions: transactions,
             ),
           ],
         ),
@@ -188,6 +164,82 @@ class _AddTrasactionScreenState extends State<AddTrasactionScreen> {
         _selectedDate = selected;
       });
     }
+  }
+}
+
+class _SubmitButton extends StatelessWidget {
+  const _SubmitButton({
+    Key? key,
+    required String category,
+    required int amount,
+    required DateTime selectedDate,
+    required String isExpense,
+    required this.transactions,
+  })  : _category = category,
+        _amount = amount,
+        _selectedDate = selectedDate,
+        _isExpense = isExpense,
+        super(key: key);
+
+  final String _category;
+  final int _amount;
+  final DateTime _selectedDate;
+  final String _isExpense;
+  final Box<Transaction> transactions;
+
+  @override
+  Widget build(BuildContext context) {
+    Box<User> users = Hive.box<User>('user');
+    final user = users.getAt(0);
+
+    onSubmit() {
+      final transaction = Transaction()
+        ..name = _category
+        ..amount = _amount.toDouble()
+        ..dateAdded = _selectedDate
+        ..isExpense = _isExpense == 'Expense' ? true : false;
+
+      if (_amount != 0) {
+        transactions.add(transaction);
+
+        if (_isExpense == 'Expense') {
+          user?.balance -= _amount;
+          user?.expenses += _amount;
+        } else {
+          user?.balance += _amount;
+          user?.income += _amount;
+        }
+
+        Navigator.pushNamed(context, '/home');
+      }
+    }
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.violet,
+            AppColors.pink,
+          ],
+        ),
+      ),
+      child: TextButton(
+        style: TextButton.styleFrom(
+          minimumSize: const Size.fromHeight(50),
+          primary: Colors.white,
+          textStyle: const TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+          ),
+          padding: const EdgeInsets.only(),
+        ),
+        onPressed: () => onSubmit(),
+        child: const Text('Submit'),
+      ),
+    );
   }
 }
 

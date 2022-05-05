@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gas2s/theme/colors.dart';
 
-class NumberField extends StatefulWidget {
+class AppTextField extends StatefulWidget {
   final Function onChanged;
   final String label;
 
-  const NumberField({
+  const AppTextField({
     Key? key,
     required this.onChanged,
     required this.label,
   }) : super(key: key);
 
   @override
-  State<NumberField> createState() => _NumberFieldState();
+  State<AppTextField> createState() => _AppTextFieldState();
 }
 
-class _NumberFieldState extends State<NumberField> {
+class _AppTextFieldState extends State<AppTextField> {
   @override
   Widget build(BuildContext context) {
     return FormField(
@@ -51,10 +51,6 @@ class _NumberFieldState extends State<NumberField> {
               ],
             ),
             child: TextField(
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-              keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 border: InputBorder.none,
               ),

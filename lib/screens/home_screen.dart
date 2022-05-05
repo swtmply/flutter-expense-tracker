@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gas2s/models/transaction_model.dart';
+import 'package:gas2s/models/transaction/transaction_model.dart';
+import 'package:gas2s/models/user/user_model.dart';
 import 'package:gas2s/theme/colors.dart';
 import 'package:gas2s/widgets/layout.dart';
 import 'package:gas2s/widgets/transactions/transactions_dateexpense.dart';
 import 'package:gas2s/widgets/ui/menu.dart';
 import 'package:gas2s/widgets/ui/title_text.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 
@@ -17,13 +17,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Box<Transaction> transactions = Hive.box<Transaction>('transactions');
-
-  @override
-  void dispose() {
-    Hive.close();
-
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +76,8 @@ class _TransactionTracker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Box<User> users = Hive.box<User>('user');
+
     return Container(
       padding: const EdgeInsets.all(24.0),
       decoration: BoxDecoration(
@@ -118,9 +113,10 @@ class _TransactionTracker extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10.0),
-          const Text(
-            '₱ 100,000.00',
-            style: TextStyle(
+          Text(
+            NumberFormat.simpleCurrency(locale: 'fil')
+                .format(users.getAt(0)!.balance),
+            style: const TextStyle(
               fontSize: 36.0,
               color: Colors.white,
               fontWeight: FontWeight.w500,
@@ -128,19 +124,19 @@ class _TransactionTracker extends StatelessWidget {
           ),
           const SizedBox(height: 35.0),
           Row(
-            children: const [
+            children: [
               _IconTransaction(
                 icon: Icons.attach_money_sharp,
                 iconColor: AppColors.green,
                 title: 'Income',
-                amount: 100000,
+                amount: users.getAt(0)!.income.toInt(),
               ),
-              SizedBox(width: 20.0),
+              const SizedBox(width: 20.0),
               _IconTransaction(
                 icon: Icons.money_off_sharp,
                 iconColor: AppColors.red,
                 title: 'Expenses',
-                amount: 100000,
+                amount: users.getAt(0)!.expenses.toInt(),
               ),
             ],
           ),

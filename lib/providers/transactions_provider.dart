@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:gas2s/models/transaction_model.dart';
+import 'package:gas2s/models/transaction/transaction_model.dart';
 import 'package:hive/hive.dart';
 
 class TransactionsProvider extends ChangeNotifier {

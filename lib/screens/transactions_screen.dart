@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gas2s/models/transaction_model.dart';
+import 'package:gas2s/models/transaction/transaction_model.dart';
 import 'package:gas2s/theme/colors.dart';
 import 'package:gas2s/widgets/layout.dart';
 import 'package:gas2s/widgets/ui/title_text.dart';
 import 'package:gas2s/widgets/transactions/transactions_dateexpense.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class TransactionsScreen extends StatefulWidget {

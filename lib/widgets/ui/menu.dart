@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gas2s/models/transaction_model.dart';
+import 'package:gas2s/models/transaction/transaction_model.dart';
+import 'package:gas2s/models/user/user_model.dart';
 import 'package:gas2s/theme/colors.dart';
 import 'package:hive/hive.dart';
 
@@ -8,7 +9,8 @@ class Menu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var transactions = Hive.box<Transaction>('transactions');
+    Box<User> users = Hive.box<User>('user');
+    Box<Transaction> transactions = Hive.box<Transaction>('transactions');
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,8 +45,8 @@ class Menu extends StatelessWidget {
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   'Hello,',
                   style: TextStyle(
                     color: AppColors.coolGray,
@@ -52,8 +54,8 @@ class Menu extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'John Allen',
-                  style: TextStyle(
+                  users.getAt(0)!.name.toString(),
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
                   ),

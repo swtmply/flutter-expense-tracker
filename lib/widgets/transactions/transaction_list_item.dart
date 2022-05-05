@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gas2s/models/transaction_model.dart';
+import 'package:gas2s/models/transaction/transaction_model.dart';
 import 'package:gas2s/theme/colors.dart';
 import 'package:intl/intl.dart';
 
