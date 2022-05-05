@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gas2s/models/transaction/transaction_model.dart';
 import 'package:gas2s/theme/colors.dart';
+import 'package:gas2s/utils/get_color.dart';
 import 'package:intl/intl.dart';
 
 class TransactionListItem extends StatelessWidget {
@@ -44,7 +45,7 @@ class TransactionListItem extends StatelessWidget {
                 height: 50,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: _getColor(transaction.name),
+                  color: GetColor.transactionType(transaction.name),
                 ),
               ),
               const SizedBox(width: 10),
@@ -73,20 +74,5 @@ class TransactionListItem extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Color _getColor(String type) {
-    switch (type) {
-      case 'Food':
-        return AppColors.pink;
-      case 'Clothes':
-        return AppColors.violet;
-      case 'Transportation':
-        return AppColors.purple;
-      case 'Gadget':
-        return AppColors.orange;
-      default:
-        return AppColors.red;
-    }
   }
 }

@@ -18,7 +18,7 @@ class Menu extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            transactions.clear();
+            // transactions.clear();
           },
           child: Container(
             padding: const EdgeInsets.all(4.0),
