@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:gas2s/models/transaction/transaction_model.dart';
 import 'package:gas2s/models/user/user_model.dart';
 import 'package:gas2s/screens/sections/add_transaction.dart';
@@ -16,7 +17,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 
 Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   Directory directory = await pathProvider.getApplicationDocumentsDirectory();
 
@@ -31,8 +33,25 @@ Future main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initialization();
+  }
+
+  void initialization() async {
+    await Future.delayed(const Duration(seconds: 1));
+    FlutterNativeSplash.remove();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:gas2s/models/user/user_model.dart';
 import 'package:gas2s/theme/colors.dart';
 import 'package:gas2s/widgets/ui/forms/number_field.dart';
