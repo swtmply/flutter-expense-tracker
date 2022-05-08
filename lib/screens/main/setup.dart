@@ -84,7 +84,9 @@ class _SetupScreenState extends State<SetupScreen> {
                     onPressed: () {
                       final user = User()
                         ..name = _name
-                        ..balance = _balance.toDouble();
+                        ..balance = _balance.toDouble()
+                        ..expenses = 0
+                        ..income = 0;
 
                       if (_balance != 0) {
                         users.add(user);
