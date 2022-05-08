@@ -10,37 +10,11 @@ class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Box<User> users = Hive.box<User>('user');
-    Box<Transaction> transactions = Hive.box<Transaction>('transactions');
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        InkWell(
-          onTap: () {
-            // transactions.clear();
-          },
-          child: Container(
-            padding: const EdgeInsets.all(4.0),
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(4.0),
-              color: Colors.white,
-              boxShadow: const [
-                BoxShadow(
-                  color: AppColors.elevation,
-                  blurRadius: 5,
-                  offset: Offset(2, 3),
-                )
-              ],
-            ),
-            child: const Icon(
-              Icons.menu,
-              color: AppColors.coolGray,
-              size: 28.0,
-            ),
-          ),
-        ),
         Row(
           children: [
             Column(

@@ -3,12 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gas2s/models/transaction/transaction_model.dart';
 import 'package:gas2s/models/user/user_model.dart';
-import 'package:gas2s/screens/add_transaction_screen.dart';
-import 'package:gas2s/screens/home_screen.dart';
-import 'package:gas2s/screens/setup_screen.dart';
-import 'package:gas2s/screens/transactions_screen.dart';
+import 'package:gas2s/screens/sections/add_transaction.dart';
+import 'package:gas2s/screens/main/home.dart';
+import 'package:gas2s/screens/main/setup.dart';
+import 'package:gas2s/screens/sections/transactions.dart';
+import 'package:gas2s/screens/settings/user_settings.dart';
 import 'package:gas2s/theme/colors.dart';
-import 'package:gas2s/widgets/navigation.dart';
+import 'package:gas2s/widgets/navigations/bottom_navigation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 // ignore: library_prefixes
@@ -43,11 +44,12 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/home': (context) => const Navigation(),
+        '/home': (context) => const BottomNavigation(),
         '/transactions': (context) => const TransactionsScreen(),
         '/add': (context) => const AddTrasactionScreen(),
+        '/settings/user': (context) => const UserSettings(),
       },
-      home: user.isEmpty ? const SetupScreen() : const Navigation(),
+      home: user.isEmpty ? const SetupScreen() : const BottomNavigation(),
     );
   }
 }

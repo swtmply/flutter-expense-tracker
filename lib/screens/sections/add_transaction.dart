@@ -210,6 +210,8 @@ class _SubmitButton extends StatelessWidget {
           user?.income += _amount;
         }
 
+        user?.save();
+
         Navigator.pushNamed(context, '/home');
       }
     }
