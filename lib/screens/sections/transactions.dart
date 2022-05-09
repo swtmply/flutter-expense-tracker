@@ -19,6 +19,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
 
   final List<String> _categoryFilterItems = [
     'All',
+    'Income',
     'Clothes',
     'Food',
     'Transportation',

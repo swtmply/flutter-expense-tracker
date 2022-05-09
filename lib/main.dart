@@ -5,7 +5,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:gas2s/models/transaction/transaction_model.dart';
 import 'package:gas2s/models/user/user_model.dart';
 import 'package:gas2s/screens/sections/add_transaction.dart';
-import 'package:gas2s/screens/main/home.dart';
 import 'package:gas2s/screens/main/setup.dart';
 import 'package:gas2s/screens/sections/transactions.dart';
 import 'package:gas2s/screens/settings/user_settings.dart';
@@ -43,7 +42,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     initialization();
   }

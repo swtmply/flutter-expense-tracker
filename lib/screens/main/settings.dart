@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gas2s/theme/colors.dart';
 import 'package:gas2s/widgets/layout.dart';
 import 'package:gas2s/widgets/ui/title_text.dart';
 

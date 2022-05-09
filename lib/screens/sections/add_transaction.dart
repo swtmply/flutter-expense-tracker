@@ -48,8 +48,10 @@ class _AddTrasactionScreenState extends State<AddTrasactionScreen> {
             DropdownList(
               onChanged: (String newValue) {
                 setState(() {
-                  _isExpense = newValue;
-                  _isIncome = !_isIncome;
+                  if (_isExpense != newValue) {
+                    _isExpense = newValue;
+                    _isIncome = !_isIncome;
+                  }
                 });
               },
               defaultValue: _isExpense,
@@ -194,7 +196,7 @@ class _SubmitButton extends StatelessWidget {
 
     onSubmit() {
       final transaction = Transaction()
-        ..name = _category
+        ..name = _isExpense == 'Income' ? 'Income' : _category
         ..amount = _amount.toDouble()
         ..dateAdded = _selectedDate
         ..isExpense = _isExpense == 'Expense' ? true : false;

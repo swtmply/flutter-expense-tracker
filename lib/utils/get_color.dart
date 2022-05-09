@@ -12,6 +12,8 @@ class GetColor {
         return AppColors.purple;
       case 'Gadget':
         return AppColors.orange;
+      case 'Income':
+        return AppColors.green;
       default:
         return AppColors.violet;
     }
